@@ -5,7 +5,7 @@
  * Copyright (c) 2016 undefined
  * License: MIT
  *
- * Generated at Thursday, August 4th, 2016, 4:58:34 PM
+ * Generated at Thursday, August 4th, 2016, 5:28:59 PM
  */
 (function() {
 var crop = angular.module('ngImgCrop', []);
@@ -1283,19 +1283,31 @@ crop.factory('cropCanvas', [function() {
                 yTop = Math.abs(centerCoords.y - size.h / 2);
 
             ctx.save();
-            ctx.strokeStyle = colors.areaOutline;
-            ctx.lineWidth = 2;
-            ctx.setLineDash([2, 2]);
+
             ctx.beginPath();
-            fnDrawClipPath(ctx, centerCoords, size);
-            ctx.stroke();
+            var clipBoxSize = angular.merge({}, size);
+            clipBoxSize.x -= 1;
+            clipBoxSize.y -= 1;
+            fnDrawClipPath(ctx, centerCoords, clipBoxSize);
             ctx.clip();
 
-            ctx.setLineDash([]);
+            ctx.lineWidth = 0;
             // draw part of original image
             if (size.w > 0) {
                 ctx.drawImage(image, xLeft * xRatio, yTop * yRatio, Math.abs(size.w * xRatio), Math.abs(size.h * yRatio), xLeft, yTop, Math.abs(size.w), Math.abs(size.h));
             }
+
+            ctx.strokeStyle = colors.areaOutline;
+            ctx.lineWidth = 1;
+            ctx.setLineDash([1, 3]);
+            ctx.beginPath();
+            var dashBoxSize = angular.merge({}, size);
+            dashBoxSize.h -= 2;
+            dashBoxSize.w -= 2;
+            dashBoxSize.x += 0.5;
+            dashBoxSize.y += 0.5;
+            fnDrawClipPath(ctx, centerCoords, dashBoxSize);
+            ctx.stroke();
 
             ctx.restore();
         };
