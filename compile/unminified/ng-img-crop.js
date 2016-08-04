@@ -5,7 +5,7 @@
  * Copyright (c) 2016 undefined
  * License: MIT
  *
- * Generated at Friday, July 29th, 2016, 12:28:27 AM
+ * Generated at Thursday, August 4th, 2016, 12:00:09 PM
  */
 (function() {
 var crop = angular.module('ngImgCrop', []);
@@ -2923,13 +2923,17 @@ crop.factory('cropHost', ['$document', '$q', 'cropAreaCircle', 'cropAreaSquare',
         };
 
         this.setAspect = function(aspect) {
-            isAspectRatio=true;
+            isAspectRatio = aspect ? true : false;
             theArea.setAspect(aspect);
             var minSize = theArea.getMinSize();
-            minSize.w=minSize.h*aspect;
+            if (aspect) {
+              minSize.w=minSize.h*aspect;
+            }
             theArea.setMinSize(minSize);
             var size = theArea.getSize();
-            size.w=size.h*aspect;
+            if (aspect) {
+              size.w=size.h*aspect;
+            }
             theArea.setSize(size);
         };
 
@@ -3230,10 +3234,12 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function ($time
                 cropHost.setPaletteColorLength(scope.paletteColorLength);
             });
             scope.$watch('aspectRatio', function () {
-                if (typeof scope.aspectRatio == 'string' && scope.aspectRatio != '') {
+                if (angular.isUndefined(scope.aspectRatio) || scope.aspectRatio === '' || scope.aspectRatio === 0) {
+                    scope.aspectRatio = undefined;
+                } else if (typeof scope.aspectRatio == 'string' && scope.aspectRatio != '') {
                     scope.aspectRatio = parseInt(scope.aspectRatio);
                 }
-                if (scope.aspectRatio) cropHost.setAspect(scope.aspectRatio);
+                cropHost.setAspect(scope.aspectRatio);
             });
             scope.$watch('allowCropResizeOnCorners', function () {
                 if (scope.allowCropResizeOnCorners) cropHost.setAllowCropResizeOnCorners(scope.allowCropResizeOnCorners);

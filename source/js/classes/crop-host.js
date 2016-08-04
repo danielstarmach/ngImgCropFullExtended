@@ -830,13 +830,17 @@ crop.factory('cropHost', ['$document', '$q', 'cropAreaCircle', 'cropAreaSquare',
         };
 
         this.setAspect = function(aspect) {
-            isAspectRatio=true;
+            isAspectRatio = aspect ? true : false;
             theArea.setAspect(aspect);
             var minSize = theArea.getMinSize();
-            minSize.w=minSize.h*aspect;
+            if (aspect) {
+              minSize.w=minSize.h*aspect;
+            }
             theArea.setMinSize(minSize);
             var size = theArea.getSize();
-            size.w=size.h*aspect;
+            if (aspect) {
+              size.w=size.h*aspect;
+            }
             theArea.setSize(size);
         };
 

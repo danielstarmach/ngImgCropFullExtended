@@ -10,6 +10,7 @@
     <title>ngImgCrop example page - Full test suite for cropping images</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="../compile/unminified/ng-img-crop.css?1" rel="stylesheet">
     <link href="css/custom-style.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
@@ -19,7 +20,7 @@
 
 </head>
 
-<body data-ng-controller="Ctrl">
+<body data-ng-controller="Ctrl as vm">
 
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
@@ -53,7 +54,7 @@
                         result-image-format="resImgFormat"
                         result-image-quality="resImgQuality"
                         result-image-size="resImgSize"
-                        aspect-ratio="aspectRatio"
+                        aspect-ratio="vm.aspectRatio"
                         allow-crop-resize-on-corners="false"
                         init-max-area="true"
                         chargement="'Testing Message'"
@@ -116,7 +117,7 @@
                 <h4>Image properties</h4>
                 <div class="form-group" data-ng-show="type=='rectangle'">
                     <label for="aspectRatio">Aspect ratio</label>
-                    <input type="text" class="form-control" id="aspectRatio" data-ng-model="aspectRatio"/>
+                    <input type="text" class="form-control" id="aspectRatio" ng-model="vm.aspectRatio"/>
                 </div>
 
                 <div class="form-group">

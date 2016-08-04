@@ -243,10 +243,12 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function ($time
                 cropHost.setPaletteColorLength(scope.paletteColorLength);
             });
             scope.$watch('aspectRatio', function () {
-                if (typeof scope.aspectRatio == 'string' && scope.aspectRatio != '') {
+                if (angular.isUndefined(scope.aspectRatio) || scope.aspectRatio === '' || scope.aspectRatio === 0) {
+                    scope.aspectRatio = undefined;
+                } else if (typeof scope.aspectRatio == 'string' && scope.aspectRatio != '') {
                     scope.aspectRatio = parseInt(scope.aspectRatio);
                 }
-                if (scope.aspectRatio) cropHost.setAspect(scope.aspectRatio);
+                cropHost.setAspect(scope.aspectRatio);
             });
             scope.$watch('allowCropResizeOnCorners', function () {
                 if (scope.allowCropResizeOnCorners) cropHost.setAllowCropResizeOnCorners(scope.allowCropResizeOnCorners);
