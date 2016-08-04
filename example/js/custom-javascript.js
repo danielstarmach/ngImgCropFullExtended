@@ -11,8 +11,8 @@ angular.module('app', ['ngImgCrop'])
             console.log('via function');
             console.log(dataURL.length);
         };
-        $scope.size = 'small';
-        $scope.type = 'circle';
+        $scope.size = 'big';
+        $scope.type = 'rectangle';
         $scope.imageDataURI = '';
         $scope.resImageDataURI = '';
         $scope.resBlob = {};

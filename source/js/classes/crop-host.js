@@ -77,7 +77,7 @@ crop.factory('cropHost', ['$document', '$q', 'cropAreaCircle', 'cropAreaSquare',
                 ctx.save();
 
                 // and make it darker
-                ctx.fillStyle = 'rgba(0, 0, 0, 0.65)';
+                ctx.fillStyle = 'rgba(216, 216, 216, 0.55)';
                 ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
                 ctx.restore();

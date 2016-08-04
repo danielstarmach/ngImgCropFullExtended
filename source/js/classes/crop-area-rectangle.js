@@ -4,7 +4,7 @@ crop.factory('cropAreaRectangle', ['cropArea', function (CropArea) {
     var CropAreaRectangle = function () {
         CropArea.apply(this, arguments);
 
-        this._resizeCtrlBaseRadius = 15;
+        this._resizeCtrlBaseRadius = 5;
         this._resizeCtrlNormalRatio = 0.75;
         this._resizeCtrlHoverRatio = 1;
         this._iconMoveNormalRatio = 0.9;
@@ -82,10 +82,6 @@ crop.factory('cropAreaRectangle', ['cropArea', function (CropArea) {
 
     CropAreaRectangle.prototype.draw = function () {
         CropArea.prototype.draw.apply(this, arguments);
-
-        var center = this.getCenterPoint();
-        // draw move icon
-        this._cropCanvas.drawIconMove([center.x, center.y], this._areaIsHover ? this._iconMoveHoverRatio : this._iconMoveNormalRatio);
 
         // draw resize thumbs
         var resizeIconsCenterCoords = this._calcRectangleCorners();

@@ -82,7 +82,7 @@ crop.factory('cropCanvas', [function() {
         resizeBoxFill: '#444',
         resizeBoxArrowFill: '#fff',
         resizeCircleStroke: '#fff',
-        resizeCircleFill: '#444',
+        resizeCircleFill: 'rgba(29, 34, 37, 0.54)',
         moveIconFill: '#fff'
     };
 
@@ -129,13 +129,10 @@ crop.factory('cropCanvas', [function() {
         this.drawIconResizeCircle = function(centerCoords, circleRadius, scale) {
             var scaledCircleRadius = circleRadius * scale;
             ctx.save();
-            ctx.strokeStyle = colors.resizeCircleStroke;
-            ctx.lineWidth = 2;
             ctx.fillStyle = colors.resizeCircleFill;
             ctx.beginPath();
             ctx.arc(centerCoords[0], centerCoords[1], scaledCircleRadius, 0, 2 * Math.PI);
             ctx.fill();
-            ctx.stroke();
             ctx.closePath();
             ctx.restore();
         };
@@ -172,20 +169,17 @@ crop.factory('cropCanvas', [function() {
             ctx.save();
             ctx.strokeStyle = colors.areaOutline;
             ctx.lineWidth = 2;
+            ctx.setLineDash([2, 2]);
             ctx.beginPath();
             fnDrawClipPath(ctx, centerCoords, size);
             ctx.stroke();
             ctx.clip();
 
+            ctx.setLineDash([]);
             // draw part of original image
             if (size.w > 0) {
                 ctx.drawImage(image, xLeft * xRatio, yTop * yRatio, Math.abs(size.w * xRatio), Math.abs(size.h * yRatio), xLeft, yTop, Math.abs(size.w), Math.abs(size.h));
             }
-
-            ctx.beginPath();
-            fnDrawClipPath(ctx, centerCoords, size);
-            ctx.stroke();
-            ctx.clip();
 
             ctx.restore();
         };

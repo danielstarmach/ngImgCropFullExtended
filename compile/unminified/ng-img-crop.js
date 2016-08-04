@@ -1,11 +1,11 @@
 /*!
- * ngImgCropExtended v0.5.4
+ * ngImgCropExtended v0.5.5
  * https://github.com/CrackerakiUA/ngImgCropExtended/
  *
  * Copyright (c) 2016 undefined
  * License: MIT
  *
- * Generated at Thursday, August 4th, 2016, 1:39:47 PM
+ * Generated at Thursday, August 4th, 2016, 4:58:34 PM
  */
 (function() {
 var crop = angular.module('ngImgCrop', []);
@@ -183,7 +183,7 @@ crop.factory('cropAreaRectangle', ['cropArea', function (CropArea) {
     var CropAreaRectangle = function () {
         CropArea.apply(this, arguments);
 
-        this._resizeCtrlBaseRadius = 15;
+        this._resizeCtrlBaseRadius = 5;
         this._resizeCtrlNormalRatio = 0.75;
         this._resizeCtrlHoverRatio = 1;
         this._iconMoveNormalRatio = 0.9;
@@ -261,10 +261,6 @@ crop.factory('cropAreaRectangle', ['cropArea', function (CropArea) {
 
     CropAreaRectangle.prototype.draw = function () {
         CropArea.prototype.draw.apply(this, arguments);
-
-        var center = this.getCenterPoint();
-        // draw move icon
-        this._cropCanvas.drawIconMove([center.x, center.y], this._areaIsHover ? this._iconMoveHoverRatio : this._iconMoveNormalRatio);
 
         // draw resize thumbs
         var resizeIconsCenterCoords = this._calcRectangleCorners();
@@ -1203,7 +1199,7 @@ crop.factory('cropCanvas', [function() {
         resizeBoxFill: '#444',
         resizeBoxArrowFill: '#fff',
         resizeCircleStroke: '#fff',
-        resizeCircleFill: '#444',
+        resizeCircleFill: 'rgba(29, 34, 37, 0.54)',
         moveIconFill: '#fff'
     };
 
@@ -1249,13 +1245,10 @@ crop.factory('cropCanvas', [function() {
         this.drawIconResizeCircle = function(centerCoords, circleRadius, scale) {
             var scaledCircleRadius = circleRadius * scale;
             ctx.save();
-            ctx.strokeStyle = colors.resizeCircleStroke;
-            ctx.lineWidth = 2;
             ctx.fillStyle = colors.resizeCircleFill;
             ctx.beginPath();
             ctx.arc(centerCoords[0], centerCoords[1], scaledCircleRadius, 0, 2 * Math.PI);
             ctx.fill();
-            ctx.stroke();
             ctx.closePath();
             ctx.restore();
         };
@@ -1292,20 +1285,17 @@ crop.factory('cropCanvas', [function() {
             ctx.save();
             ctx.strokeStyle = colors.areaOutline;
             ctx.lineWidth = 2;
+            ctx.setLineDash([2, 2]);
             ctx.beginPath();
             fnDrawClipPath(ctx, centerCoords, size);
             ctx.stroke();
             ctx.clip();
 
+            ctx.setLineDash([]);
             // draw part of original image
             if (size.w > 0) {
                 ctx.drawImage(image, xLeft * xRatio, yTop * yRatio, Math.abs(size.w * xRatio), Math.abs(size.h * yRatio), xLeft, yTop, Math.abs(size.w), Math.abs(size.h));
             }
-
-            ctx.beginPath();
-            fnDrawClipPath(ctx, centerCoords, size);
-            ctx.stroke();
-            ctx.clip();
 
             ctx.restore();
         };
@@ -2170,7 +2160,7 @@ crop.factory('cropHost', ['$document', '$q', 'cropAreaCircle', 'cropAreaSquare',
                 ctx.save();
 
                 // and make it darker
-                ctx.fillStyle = 'rgba(0, 0, 0, 0.65)';
+                ctx.fillStyle = 'rgba(216, 216, 216, 0.55)';
                 ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
                 ctx.restore();
