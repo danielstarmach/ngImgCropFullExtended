@@ -4,7 +4,6 @@ var argv         = require('minimist')(process.argv.slice(2)),
     header       = require('gulp-header'),
     gutil        = require('gulp-util'),
     ngAnnotate   = require('gulp-ng-annotate'),
-    compass      = require('gulp-compass'),
     refresh      = require('gulp-livereload'),
     prefix       = require('gulp-autoprefixer'),
     minifyCss    = require('gulp-minify-css'),
@@ -19,6 +18,7 @@ var argv         = require('minimist')(process.argv.slice(2)),
     jshint       = require('gulp-jshint'),
     jshintStylish= require('jshint-stylish'),
     pkg          = require('./package.json'),
+    sass         = require('gulp-sass'),
     lr,
     refresh_lr;
 
@@ -69,10 +69,11 @@ var Config = {
 // Compile Styles
 gulp.task('styles', function(){
   return gulp.src(Config.paths.source.scss + '/ng-img-crop.scss')
-    .pipe(compass({
-      sass: Config.paths.source.scss,
-      css: Config.paths.compileUnminified.css,
-      errLogToConsole: true
+    .pipe(sass({
+      style: 'compressed',
+      includePaths: [
+        Config.paths.source.scss
+      ]
     }))
     .pipe(prefix('last 2 version', '> 5%', 'safari 5', 'ie 8', 'ie 7', 'opera 12.1', 'ios 6', 'android 4'))
     .pipe(gulp.dest(Config.paths.compileUnminified.css));
@@ -85,7 +86,7 @@ gulp.task('scripts-part-1', function(){
       Config.paths.source.js + '/classes/*.js',
       Config.paths.source.js + '/ng-img-crop.js',
       Config.paths.source.js + '/canvas-to-blob.js',
-      //Config.paths.source.js + '/color-thief.min.js'
+      Config.paths.source.js + '/color-thief.min.js'
     ])
     .pipe(concat('ng-img-crop'+'.js', {
       separator: '\n\n',
