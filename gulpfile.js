@@ -108,7 +108,7 @@ gulp.task('scripts-part-2', function(){
       Config.paths.tmp + '/ng-img-crop'+'.js',
       Config.paths.source.js + '/exif.js',
       Config.paths.source.js + '/ios-imagefile-megapixel.js',
-      Config.paths.source.js + '/color-thief.min.js'
+      // Config.paths.source.js + '/color-thief.min.js'
     ])
     .pipe(concat('ng-img-crop'+'.js', {
       separator: '\n\n',
