@@ -838,6 +838,10 @@ crop.factory('cropHost', ['$document', '$q', 'cropAreaCircle', 'cropAreaSquare',
             }
             theArea.setMinSize(minSize);
             var size = theArea.getSize();
+            if(initMax){
+                size.h = ctx.canvas.height;
+                size.w = ctx.canvas.width;
+            };
             if (aspect) {
               size.w=size.h*aspect;
             }

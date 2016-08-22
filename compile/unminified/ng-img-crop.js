@@ -5,7 +5,7 @@
  * Copyright (c) 2016 undefined
  * License: MIT
  *
- * Generated at Thursday, August 4th, 2016, 5:28:59 PM
+ * Generated at Monday, August 22nd, 2016, 9:46:06 AM
  */
 (function() {
 var crop = angular.module('ngImgCrop', []);
@@ -2933,6 +2933,10 @@ crop.factory('cropHost', ['$document', '$q', 'cropAreaCircle', 'cropAreaSquare',
             }
             theArea.setMinSize(minSize);
             var size = theArea.getSize();
+            if(initMax){
+                size.h = ctx.canvas.height;
+                size.w = ctx.canvas.width;
+            };
             if (aspect) {
               size.w=size.h*aspect;
             }
